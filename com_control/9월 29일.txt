@@ -1,0 +1,107 @@
+온도센서는 자습해라
+
+analogwrite
+
+d-a-c 컨버터가 필요.==>op amp가 있어야하는데
+
+arduino는 없다.
+
+digital을 analog처럼 유사하게 사용할 수 있게 만들어 준다.
+
+대전류==> 1A이상의 전류
+
+최소전압 3~4V정도 줘야 한다.
+
+여자==> 자화가 가능
+
+RPM에 리플이 생기긴 하는데
+
+평균 속도가 크다.
+
+pwm은 아날로그 신호를 흉내내는 것.
+
+pwm= pseudo-analog output.
+
+주파수가 높으면 dc모터의 속도의 고저가 줄어든다.
+
+5,6번의 주파수가 높다.
+
+
+constrain 함수(value, 0, 255)
+
+arduino에서는 숫자로 인식하는 것이 아니라 키보드의 아스키코드값으로 인식한다.
+
+숫자를 넣기 위해서는 parseInt라는 함수를 사용해야한다.
+parseint참고 자료 링크
+https://m.blog.naver.com/vkdlsvnt/220226595678
+
+
+아두이노 드론을 쓸 때 사용하는
+bldc모터를 쓸때에도 pwm신호를 사용해 구동시킨다.
+
+<시리얼통신>->중간고사를 친다면 나올 수 있다.
+
+digital RX는 0번 TX=1번핀==>하드웨어 시리얼단자==> 속도가 빠르다.
+
+RX=receive
+TX=transfer
+
+Serial uart
+장점 : 데이터를 받고 주고를 동시에 가능하다.
+arduino-RX 주변기기-TX
+arduino-TX 주변기기-RX
+cross연결해야한다.
+
+단점 : 1대1통신만 가능하다.
+
+소프트웨어 시리얼 내가 설정(코딩)을 통해서 다른 디지털 핀을 통해
+주변기기와 통신을 할 수 있다. ==> 속도가 느리다.
+
+I2C
+
+단점: 데이터가 가거나 오거나 밖에 안 된다.
+
+1:N ,3lines
+
+(A4=sda->data라인 ,A5=scl->clock라인)로 쓰인다.
+
+단점 : address주소값을 지정해줘야한다.
+
+SPI
+1 : N, 5lines
+빠른 통신 방식
+단점 : 5line이 단점이다. 핀을 많이 잡아 먹는다.
+
+13 -> sck=serial clock
+
+12 -> MISO=master in slave out, 11-> MOSI= master out slave in
+
+10 -> SS=피지컬한 slave select
+9 ->slave개수에 따라 여러가지를 꽂아야한다.
+
+장점 : 하드웨어 시리얼방식이라 안정적이다.
+
+spi통신 목적으로 아두이노를 사용할 것이라면 arduino mega를 사용하면 된다.
+
+8N1통신 : 8 Data bit, No Parity bit, 1 Stop bit
+
+1byte이상을 내기위해서는 여러개를 나오게 하면 된다.
+signal이 아무것도 없을 때 = 5v로 고정되어 있다.(5v가 이상적인 상태)
+
+start bit = 0 
+data bit = Data byte 역순, b0~7
+Paraity bit :없음
+Stop bit = 1
+어떻게 나가냐? ==> 클럭스피드로 나간다.
+
+lsb=1, msb=0
+startbit=0
+stopbit=1
+
+Baud rate : Packet을 시리얼 통신으로 전송할 때, 1초동안 보내는 bit 수
+
+예) 8N1(10 bits) 경우 : 9600 bits/s → 960 Packets/s → 960 Bytes/s
+
+아두이노에서 일반적인 최대 보드 레이트는 115200이다.
+이 방식도 시리얼 통신 방식만 사용할 때 가능하다.
+데이터를 잃어버리지 않기 위해 일반적으로 9600을 사용한다.
