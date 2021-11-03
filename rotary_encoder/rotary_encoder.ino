@@ -10,7 +10,7 @@ void valueUP() // Calculate the counter numbers (CW/CCW)
 {
   if(digitalRead(pinCLK)) //만약 2번이 하이라면 그러면
   {
-    if(digitalRead(pinDT)=HIGH) 
+    if(digitalRead(pinDT)==HIGH) 
     {
       count++;// 카운터를 증가시킨다면 카운터는 시계방향
     }
